@@ -63,7 +63,11 @@ if [ ! -f $filepath ]; then
   echo "$0: downloading data from $url.  This may take some time, please be patient."
 
   cd $data
-  if ! wget --no-check-certificate $url; then
+  # if ! wget --no-check-certificate $url; then
+  #   echo "$0: error executing wget $url"
+  #   exit 1;
+  # fi
+  if ! aria2c -x5 $url; then
     echo "$0: error executing wget $url"
     exit 1;
   fi
@@ -73,8 +77,11 @@ fi
 cd $data
 
 if ! tar -xzf $filename; then
-  echo "$0: error un-tarring archive $filepath"
-  exit 1;
+  echo "$0: error un-tarring archive $filepath, trying without gzip"
+  if ! tar -xf $filename; then
+    echo "$0: error un-tarring archive $filepath"
+    exit 1;
+  fi
 fi
 
 cd $workspace
