@@ -9,7 +9,7 @@ train_set="train"
 train_dev="dev"
 test_set="test"
 
-asr_config=conf/train_asr_transformer.yaml
+asr_config=conf/train_asr_xlsr53_conformer.yaml
 inference_config=conf/decode_asr.yaml
 
 ./asr.sh \
@@ -30,5 +30,5 @@ inference_config=conf/decode_asr.yaml
     --test_sets "${test_set}" \
     --inference_asr_model valid.acc.best.pth \
     --lm_train_text "data/${train_set}/text"  "$@" \
-    --expdir 'ers_text'
+    --expdir 'xlsr_ers_text'
 
