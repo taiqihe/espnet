@@ -9,8 +9,8 @@ train_set="train"
 train_dev="dev"
 test_set="test"
 
-asr_config=conf/train_asr_transformer_default_xlsr_linear.yaml
-inference_config=conf/decode_asr.yaml
+asr_config=conf/tuning/train_asr_transformer_default_xlsr_linear.yaml
+inference_config=conf/tuning/decode_asr.yaml
 
 ./asr.sh \
     --local_data_opts "--stage 1" \
@@ -18,7 +18,7 @@ inference_config=conf/decode_asr.yaml
     --stop_stage 100 \
     --ngpu 1 \
     --nj 4 \
-    --inference_nj 4 \
+    --inference_nj 2 \
     --use_lm true \
     --token_type char \
     --feats_type raw \
@@ -29,6 +29,6 @@ inference_config=conf/decode_asr.yaml
     --valid_set "${train_dev}" \
     --test_sets "${test_set}" \
     --inference_asr_model valid.acc.best.pth \
-    --expdir 'kke_text_xlsr' \
+    --expdir 'ainu_text_xlsr' \
     --lm_train_text "data/${train_set}/text"  "$@"
     
