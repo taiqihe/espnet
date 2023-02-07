@@ -17,7 +17,7 @@ inference_config=conf/tuning/decode_asr.yaml
     --stage 1 \
     --stop_stage 100 \
     --ngpu 1 \
-    --nj 4 \
+    --nj 2 \
     --inference_nj 2 \
     --use_lm true \
     --token_type char \
@@ -29,6 +29,6 @@ inference_config=conf/tuning/decode_asr.yaml
     --valid_set "${train_dev}" \
     --test_sets "${test_set}" \
     --inference_asr_model valid.acc.best.pth \
-    --expdir 'ainu_text_xlsr' \
+    --expdir 'kke_ur_xlsr' \
     --lm_train_text "data/${train_set}/text"  "$@"
     
