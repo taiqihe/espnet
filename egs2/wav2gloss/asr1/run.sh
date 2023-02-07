@@ -16,6 +16,7 @@ inference_config=conf/tuning/decode_asr.yaml
     --local_data_opts "--stage 1" \
     --stage 1 \
     --stop_stage 100 \
+    --feats_normalize utterance_mvn \
     --ngpu 1 \
     --nj 2 \
     --inference_nj 2 \
@@ -29,6 +30,5 @@ inference_config=conf/tuning/decode_asr.yaml
     --valid_set "${train_dev}" \
     --test_sets "${test_set}" \
     --inference_asr_model valid.acc.best.pth \
-    --expdir 'kke_ur_xlsr' \
+    --expdir 'kke_sr_xlsr' \
     --lm_train_text "data/${train_set}/text"  "$@"
-    
