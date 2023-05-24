@@ -72,6 +72,7 @@ JSSS=downloads
 JSUT=downloads
 JTUBESPEECH=downloads
 JVS=downloads
+KSC=downloads
 KSS=
 QASR_TTS=downloads
 SNIPS= # smart-light-en-closed-field data path
@@ -137,6 +138,7 @@ CMU_ARCTIC=downloads
 CMU_INDIC=downloads
 INDIC_SPEECH=downloads
 IWSLT22_DIALECT=
+IWSLT22_LOW_RESOURCE=downloads
 JKAC=
 MUCS_SUBTASK1=downloads
 MUCS_SUBTASK2=downloads
@@ -171,6 +173,11 @@ CATSLU=downloads
 ELRA_E0024=
 ELRA_S0272=
 ELRA_S0371=
+M4SINGER=
+ONIKU=
+PJS=
+AMEBOSHI=
+ITAKO=
 
 # For only CMU TIR environment
 if [[ "$(hostname)" == tir* ]]; then
