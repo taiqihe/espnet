@@ -33,7 +33,7 @@ set -u
 set -o pipefail
 
 wavdir=${TOTONAC}
-annotation_dir=${TOTONAC}
+annotation_dir=${TOTONAC}/corrected_elan_files
 
 log "data preparation started"
 

@@ -9,20 +9,21 @@ train_set="train"
 train_dev="dev"
 test_set="test dev"
 
-asr_config=conf/train_asr.yaml
+asr_config=conf/tuning/train_xls_r_conformer.yaml
 inference_config=conf/decode_asr.yaml
 
 ./asr.sh \
-    --local_data_opts "--stage 0" \
+    --local_data_opts "--stage 1" \
     --audio_format "flac.ark" \
     --feats_normalize utterance_mvn \
     --stage 1 \
     --stop_stage 100 \
-    --speed_perturb_factors "0.9 1.0 1.1" \
-    --ngpu 1 \
+    --ngpu 4 \
+    --nj 16 \
+    --inference_nj 4 \
+    --gpu_inference true \
     --use_lm true \
-    --token_type bpe \
-    --nbpe 250 \
+    --token_type char \
     --feats_type raw \
     --asr_config "${asr_config}" \
     --inference_config "${inference_config}" \
