@@ -8,14 +8,13 @@ from setuptools import find_packages, setup
 
 requirements = {
     "install": [
-        "setuptools>=38.5.1,<74.0.0",
         "packaging",
         "configargparse>=1.2.1",
         "typeguard",
         "humanfriendly",
         "scipy>=1.4.1",
         "filelock",
-        "librosa==0.9.2",
+        "librosa",
         "jamo==0.4.1",  # For kss
         "PyYAML>=5.1.2",
         "soundfile>=0.10.2",
@@ -25,13 +24,13 @@ requirements = {
         "torch_complex",
         "nltk>=3.4.5",
         # fix CI error due to the use of deprecated aliases
-        "numpy<1.24",
+        "numpy",
         # https://github.com/espnet/espnet/runs/6646737793?check_suite_focus=true#step:8:7651
         "protobuf",
         "hydra-core",
         "opt-einsum",
         # ASR
-        "sentencepiece==0.1.97",
+        "sentencepiece",
         "ctc-segmentation>=1.6.6",
         # TTS
         "pyworld>=0.3.4",
@@ -53,7 +52,6 @@ requirements = {
     "train": [
         "matplotlib",
         "pillow==9.5.0",
-        "editdistance==0.5.2",
         "wandb",
         "tensorboard>=1.14",
     ],
