@@ -5,6 +5,7 @@ from typeguard import typechecked
 
 from espnet2.text.abs_tokenizer import AbsTokenizer
 from espnet2.text.char_tokenizer import CharTokenizer
+from espnet2.text.byte_tokenizer import ByteTokenizer
 from espnet2.text.hugging_face_tokenizer import HuggingFaceTokenizer
 from espnet2.text.phoneme_tokenizer import PhonemeTokenizer
 from espnet2.text.sentencepiece_tokenizer import SentencepiecesTokenizer
@@ -65,6 +66,14 @@ def build_tokenizer(
 
     elif token_type == "char":
         return CharTokenizer(
+            non_linguistic_symbols=non_linguistic_symbols,
+            space_symbol=space_symbol,
+            remove_non_linguistic_symbols=remove_non_linguistic_symbols,
+            nonsplit_symbols=nonsplit_symbol,
+        )
+
+    elif token_type == "byte":
+        return ByteTokenizer(
             non_linguistic_symbols=non_linguistic_symbols,
             space_symbol=space_symbol,
             remove_non_linguistic_symbols=remove_non_linguistic_symbols,

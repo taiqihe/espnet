@@ -75,6 +75,11 @@ class HuggingFaceFrontend(AbsFrontend):
             encoded_lengths = torch.sum(encoded.attention_mask, dim=-1)
 
         encoded = self.encoder(**encoded).last_hidden_state
+        if torch.max(encoded_lengths) != encoded.size(1):
+            # truncate the sequence to the actual length
+            # there is a weird bug in conformer encoder
+            encoded = encoded[:, : torch.max(encoded_lengths), :]
+        # encoded_lengths = torch.ones(encoded.size(0), dtype=torch.long) * encoded.size(1)
 
         return encoded, encoded_lengths
 
