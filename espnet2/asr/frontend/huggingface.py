@@ -4,10 +4,10 @@ from typing import Optional, Tuple, Union
 
 import humanfriendly
 import torch
+import torch.share
 from typeguard import typechecked
 
 from espnet2.asr.frontend.abs_frontend import AbsFrontend
-import torch.share
 
 
 class HuggingFaceFrontend(AbsFrontend):
@@ -19,9 +19,11 @@ class HuggingFaceFrontend(AbsFrontend):
         model,
         fs: Union[int, str] = 16000,
         download_dir: Optional[str] = None,
+        load_pretrained: bool = True,
     ):
         try:
             from transformers import (
+                AutoConfig,
                 AutoFeatureExtractor,
                 AutoModel,
                 EncodecFeatureExtractor,
@@ -31,7 +33,11 @@ class HuggingFaceFrontend(AbsFrontend):
             raise ImportError("Please install `transformers`")
 
         super().__init__()
-        self.encoder = AutoModel.from_pretrained(model, cache_dir=download_dir)
+        if load_pretrained:
+            self.encoder = AutoModel.from_pretrained(model, cache_dir=download_dir)
+        else:
+            config = AutoConfig.from_pretrained(model, cache_dir=download_dir)
+            self.encoder = AutoModel.from_config(config)
         self.processor = AutoFeatureExtractor.from_pretrained(
             model, cache_dir=download_dir
         )
@@ -55,9 +61,17 @@ class HuggingFaceFrontend(AbsFrontend):
     def forward(
         self, inputs: torch.Tensor, input_lengths: torch.Tensor
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """
-        Inputs will follow ESPNet conventions which are padded tensors,
-        but we need to re-convert to numpy and re-encode with the HF processor.
+        """Wrapper for the transformers forward pass. Inputs are converted
+        to numpy and re-encoded with the transformers processor.
+
+        Args:
+            input: Input (B, L) single channel waveform.
+            input_lengths: Input lengths within batch.
+
+        Returns:
+            Tensor: Output with dimensions (B, T, D), T is the processed length,
+                D is the feature dimension.
+            Tensor: Output lengths within batch.
         """
         with torch.no_grad():
             # Re-obtain jagged inputs to feed into the HF processor
